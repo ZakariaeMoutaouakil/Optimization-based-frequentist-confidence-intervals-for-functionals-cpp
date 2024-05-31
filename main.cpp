@@ -40,7 +40,7 @@ int main() {
     std::vector<std::vector<double>> simplex = discrete_simplex(m, precision, true);
     // std::cout << "simplex: " << simplex << std::endl;
 
-    std::vector<std::vector<float>> filtered_simplex = filter_vectors_by_max_value(()simplex, threshold);
+    std::vector<std::vector<float>> filtered_simplex = filter_vectors_by_max_value(simplex, threshold);
     // std::cout << "filtered_simplex: " << filtered_simplex << std::endl;
 
     std::vector<std::vector<float>> constraint_set = unique_vectors(filtered_simplex);
