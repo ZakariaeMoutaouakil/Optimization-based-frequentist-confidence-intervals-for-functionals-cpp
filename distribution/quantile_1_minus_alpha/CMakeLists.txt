@@ -1,0 +1,5 @@
+add_library(quantile_1_minus_alpha quantile_1_minus_alpha.cpp)
+
+# Optionally add an executable for testing purposes
+add_executable(quantile_1_minus_alpha_example example.cpp)
+target_link_libraries(quantile_1_minus_alpha_example quantile_1_minus_alpha)

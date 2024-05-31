@@ -1,0 +1,5 @@
+add_library(bin_second_largest_values bin_second_largest_values.cpp)
+
+# Optionally add an executable for testing purposes
+add_executable(bin_second_largest_values_example example.cpp)
+target_link_libraries(bin_second_largest_values_example bin_second_largest_values)

@@ -1,0 +1,8 @@
+add_library(log_likelihood_grid log_likelihood_grid.cpp)
+
+target_link_libraries(log_likelihood_grid PRIVATE maximize_product_list)
+target_link_libraries(log_likelihood_grid PRIVATE maximize_product_grid)
+
+# Optionally add an executable for testing purposes
+add_executable(log_likelihood_grid_example example.cpp)
+target_link_libraries(log_likelihood_grid_example log_likelihood_grid)

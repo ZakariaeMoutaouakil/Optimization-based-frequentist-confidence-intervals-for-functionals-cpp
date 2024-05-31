@@ -1,0 +1,8 @@
+add_library(maximize_product_grid maximize_product_grid.cpp)
+
+# Link maximize_product_grid with maximize_product
+target_link_libraries(maximize_product_grid PRIVATE maximize_product)
+
+# Optionally add an executable for testing purposes
+add_executable(maximize_product_grid_example example.cpp)
+target_link_libraries(maximize_product_grid_example maximize_product_grid)
