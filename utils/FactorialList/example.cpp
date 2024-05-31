@@ -7,7 +7,7 @@ int main() {
 
     for (int limit : limits) {
         auto start = std::chrono::high_resolution_clock::now(); // Start time
-        std::vector<unsigned long long> factorials_list = factorial_list(limit);
+        std::vector<int> factorials_list = factorial_list(limit);
         auto end = std::chrono::high_resolution_clock::now(); // End time
 
         std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time

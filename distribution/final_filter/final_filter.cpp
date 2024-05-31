@@ -44,19 +44,36 @@ double final_filter(const std::vector<std::vector<double>>& vectors, const std::
     std::vector<std::vector<double>> final_candidates;
 
     for (size_t i = 0; i < vectors.size(); ++i) {
-        double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample]) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
-            [&x, &vectors, i](double sum, double pi) {
-                size_t index = &pi - &vectors[i][0]; // Get the current index
-                return pi != 0 ? sum + x[index] * std::log(pi) : sum;
-            });
+        std::cout << "vectors[i]: " << vectors[i].size() << std::endl;
+        std::cout << "multinomial_coefficients[index_of_sample]: " << -2 * std::log(multinomial_coefficients[index_of_sample]) << std::endl;
+        // double term =  - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
+        //     [&x, &vectors, i](double sum, double pi) {
+        //         size_t index = &pi - &vectors[i][0]; // Get the current index
+        //         return pi != 0 ? sum + x[index] * std::log(pi) : sum;
+        //     });
 
+        // std::cout << "term: " << term << std::endl;
+        // double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample]) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
+        //     [&x, &vectors, i](double sum, double pi) {
+        //         size_t index = &pi - &vectors[i][0]; // Get the current index
+        //         return pi != 0 ? sum + x[index] * std::log(pi) : sum;
+        //     });
+        double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample]) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
+        [&x, &vectors, i](double sum, double pi) {
+            static size_t index = 0; // Static variable to keep track of index
+            double contribution = pi != 0 ? x[index] * std::log(pi) : 0.0;
+            index++;
+            return sum + contribution;
+        });
         std::cout << "likelihood: " << likelihood << std::endl;
 
         if (likelihood <= quantiles[i] + maximum_likelihood) {
+            std::cout << "Candidate: " << i << std::endl;
             final_candidates.push_back(vectors[i]);
         }
     }
 
+    std::cout << "final_candidates: " << final_candidates.size() << std::endl;
     std::vector<double> second_largest_values = second_largest_of_vectors(final_candidates);
     return *std::max_element(second_largest_values.begin(), second_largest_values.end());
 }

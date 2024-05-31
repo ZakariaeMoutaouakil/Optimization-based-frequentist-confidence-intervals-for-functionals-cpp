@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<std::vector<float>> unique_vectors(const std::vector<std::vector<float>>& vectors);
+std::vector<std::vector<double>> unique_vectors(const std::vector<std::vector<double>>& vectors);
 
 #endif // UNIQUE_VECTORS_H

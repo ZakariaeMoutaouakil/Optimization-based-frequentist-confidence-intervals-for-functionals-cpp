@@ -3,6 +3,6 @@
 
 #include <vector>
 
-float quantile_1_minus_alpha(const std::vector<float>& values, const std::vector<float>& probabilities, float alpha);
+double quantile_1_minus_alpha(const std::vector<double>& values, const std::vector<double>& probabilities, double alpha);
 
 #endif // QUANTILE_1_MINUS_ALPHA_H

@@ -3,15 +3,15 @@
 #include <vector>
 
 int main() {
-    std::vector<std::vector<float>> vecs = {
-        {0.1f, 0.2f, 0.3f},
-        {0.3f, 0.2f, 0.1f},
-        {0.5f, 0.4f, 0.6f},
-        {0.7f, 0.8f, 0.9f},
-        {0.2f, 0.1f, 0.3f}
+    std::vector<std::vector<double>> vecs = {
+        {0.1, 0.2, 0.3},
+        {0.3, 0.2, 0.1},
+        {0.5, 0.4, 0.6},
+        {0.7, 0.8, 0.9},
+        {0.2, 0.1, 0.3}
     };
 
-    std::vector<std::vector<float>> unique_vectors_list = unique_vectors(vecs);
+    std::vector<std::vector<double>> unique_vectors_list = unique_vectors(vecs);
 
     std::cout << "Unique vectors:" << std::endl;
     for (const auto& vec : unique_vectors_list) {

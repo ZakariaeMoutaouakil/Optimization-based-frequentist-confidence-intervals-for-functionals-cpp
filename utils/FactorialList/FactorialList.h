@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<unsigned long long> factorial_list(int n);
+std::vector<int> factorial_list(int n);
 
 #endif // FACTORIALLIST_H

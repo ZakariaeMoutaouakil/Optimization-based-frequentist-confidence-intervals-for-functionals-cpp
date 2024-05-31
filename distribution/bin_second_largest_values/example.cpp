@@ -3,15 +3,15 @@
 #include <vector>
 
 int main() {
-    std::vector<std::vector<float>> vectors = {
-        {0.1f, 0.2f, 0.3f, 0.4f},
-        {0.25f, 0.25f, 0.25f, 0.25f},
-        {0.4f, 0.3f, 0.2f, 0.1f},
-        {0.05f, 0.05f, 0.05f, 0.85f}
+    std::vector<std::vector<double>> vectors = {
+        {0.1, 0.2, 0.3, 0.4},
+        {0.25, 0.25, 0.25, 0.25},
+        {0.4, 0.3, 0.2, 0.1},
+        {0.05, 0.05, 0.05, 0.85}
     };
-    float width = 0.1f;
+    double width = 0.1;
 
-    std::vector<float> results = bin_second_largest_values(vectors, width);
+    std::vector<double> results = bin_second_largest_values(vectors, width);
     std::cout << "Binned second largest values: ";
     for (const auto& value : results) {
         std::cout << value << " ";
