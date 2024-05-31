@@ -1,0 +1,5 @@
+add_library(MultinomialCoefficient MultinomialCoefficient.cpp)
+
+# Optionally add an executable for testing purposes
+add_executable(MultinomialCoefficient_example example.cpp)
+target_link_libraries(MultinomialCoefficient_example MultinomialCoefficient)
