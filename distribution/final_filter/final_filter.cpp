@@ -38,27 +38,15 @@ std::vector<double> second_largest_of_vectors(const std::vector<std::vector<doub
 }
 
 double final_filter(const std::vector<std::vector<double>>& vectors, const std::vector<double>& quantiles,
-                    const std::vector<double>& x, const std::vector<int>& multinomial_coefficients,
+                    const std::vector<double>& x, const std::vector<mpz_class>& multinomial_coefficients,
                     int index_of_sample, double threshold) {
     double maximum_likelihood = -2 * maximize_product(x, threshold).first;
     std::vector<std::vector<double>> final_candidates;
 
     for (size_t i = 0; i < vectors.size(); ++i) {
         std::cout << "vectors[i]: " << vectors[i].size() << std::endl;
-        std::cout << "multinomial_coefficients[index_of_sample]: " << -2 * std::log(multinomial_coefficients[index_of_sample]) << std::endl;
-        // double term =  - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
-        //     [&x, &vectors, i](double sum, double pi) {
-        //         size_t index = &pi - &vectors[i][0]; // Get the current index
-        //         return pi != 0 ? sum + x[index] * std::log(pi) : sum;
-        //     });
-
-        // std::cout << "term: " << term << std::endl;
-        // double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample]) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
-        //     [&x, &vectors, i](double sum, double pi) {
-        //         size_t index = &pi - &vectors[i][0]; // Get the current index
-        //         return pi != 0 ? sum + x[index] * std::log(pi) : sum;
-        //     });
-        double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample]) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
+        std::cout << "multinomial_coefficients[index_of_sample]: " << -2 * std::log(multinomial_coefficients[index_of_sample].get_d()) << std::endl;
+        double likelihood = -2 * std::log(multinomial_coefficients[index_of_sample].get_d()) - 2 * std::accumulate(vectors[i].begin(), vectors[i].end(), 0.0,
         [&x, &vectors, i](double sum, double pi) {
             static size_t index = 0; // Static variable to keep track of index
             double contribution = pi != 0 ? x[index] * std::log(pi) : 0.0;

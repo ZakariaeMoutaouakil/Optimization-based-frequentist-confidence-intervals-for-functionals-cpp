@@ -2,9 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <gmpxx.h>
 
 int main() {
-    std::vector<int> coefficients = {12, 60, 24};
+    std::vector<mpz_class> coefficients = {12, 60, 24};
     std::vector<std::vector<double>> vectors = {
         {0.2, 0.3, 0.5},
         {0.1, 0.1, 0.8},

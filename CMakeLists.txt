@@ -3,8 +3,14 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Find Eigen
+# Include custom cmake modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+
+# Find NLopt
 find_package(NLopt REQUIRED)
+
+# Find GMP
+find_package(GMP REQUIRED)
 
 # Add subdirectories
 add_subdirectory(utils/discrete_simplex)
@@ -27,3 +33,7 @@ add_executable(main main.cpp)
 
 # Link the subpackages to the main executable
 target_link_libraries(main discrete_simplex maximize_product FactorialList FilterVectors MultinomialCoefficient Multinomial unique_vectors find_closest_indices quantile_1_minus_alpha bin_second_largest_values maximize_product_list maximize_product_grid log_likelihood_grid final_filter)
+
+# Link GMP libraries to the main executable
+target_link_libraries(main ${GMP_LIBRARIES})
+target_include_directories(main PRIVATE ${GMP_INCLUDE_DIRS})
