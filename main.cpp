@@ -58,15 +58,15 @@ int main() {
     using namespace std::chrono;
     using namespace std;
 
-    int n = 25;
+    int n = 20;
     int m = 3;
 
     auto start_time = high_resolution_clock::now();
 
-    vector<vector<double>> sample_space = discrete_simplex(m, n, false);
-    vector<vector<int>> sample_space_int = convert_to_int(sample_space);
+    vector<vector<double> > sample_space = discrete_simplex(m, n, false);
+    vector<vector<int> > sample_space_int = convert_to_int(sample_space);
 
-    double threshold = 0.9;
+    double threshold = 0.8;
     int precision = 103;
     double bin_width = 0.001;
 
@@ -88,9 +88,10 @@ int main() {
 
     cout << "factorials_start: " << endl;
     vector<int> factorials = factorial_list(n);
-    cout << "factorials_end: " << endl;
+    cout << "factorials_end: " << factorials.size() << endl;
 
     vector<int> multinomial_coefficients = multinomial_coefficient(sample_space_int, factorials);
+    cout << "multinomial_coefficients: " << multinomial_coefficients.size() << endl;
     vector<vector<double> > probabilities = calculate_multinomial_probability_grid(
         multinomial_coefficients, constraint_set, sample_space_int);
     cout << "probabilities: " << probabilities.size() << endl;
@@ -109,7 +110,8 @@ int main() {
     vector<int> observation = {n - 2, 1, 1};
     vector<double> observation_double = convert_to_double(observation);
     int index_of_observation = static_cast<int>(distance(sample_space_int.begin(),
-                                                         find(sample_space_int.begin(), sample_space_int.end(), observation)));
+                                                         find(sample_space_int.begin(), sample_space_int.end(),
+                                                              observation)));
     cout << "observation: ";
     for (int val: observation) {
         cout << val << " ";
