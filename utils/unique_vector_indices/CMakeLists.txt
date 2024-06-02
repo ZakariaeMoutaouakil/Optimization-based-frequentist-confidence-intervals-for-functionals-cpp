@@ -1,0 +1,5 @@
+add_library(unique_vector_indices unique_vector_indices.cpp)
+
+# Optionally add an executable for testing purposes
+add_executable(unique_vector_indices_example example.cpp)
+target_link_libraries(unique_vector_indices_example unique_vector_indices)

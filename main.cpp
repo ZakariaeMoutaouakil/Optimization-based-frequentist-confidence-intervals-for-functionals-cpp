@@ -33,8 +33,8 @@ std::vector<std::vector<int> > convert_to_int(const std::vector<std::vector<doub
         int_vector.reserve(double_vector.size()); // Reserve space for efficiency
 
         for (double value: double_vector) {
-            std::cout << "value: " << value << std::endl;
-            std::cout << "int(value): " << static_cast<int>(value) << std::endl;
+            // std::cout << "value: " << value << std::endl;
+            // std::cout << "int(value): " << static_cast<int>(value) << std::endl;
             int_vector.push_back(static_cast<int>(value)); // Use static_cast to convert double to int
         }
 
@@ -56,21 +56,34 @@ std::vector<double> convert_to_double(const std::vector<int> &int_vector) {
     return double_vector;
 }
 
+// Function to print each row of a 2D vector of doubles
+void print_2d_vector(const std::vector<std::vector<double>> &vec) {
+    for (const auto &row : vec) {
+        for (const auto &elem : row) {
+            std::cout << elem << " ";
+        }
+        std::cout << std::endl;
+    }
+}
 int main() {
     using namespace std::chrono;
     using namespace std;
 
-    int n = 50;
+    int n = 41;
     int m = 3;
 
     auto start_time = high_resolution_clock::now();
 
     vector<vector<double> > sample_space = discrete_simplex(m, n, false);
+    std::cout << "sample_space: " << sample_space.size() << std::endl;
+    print_2d_vector(sample_space);
     vector<vector<int> > sample_space_int = convert_to_int(sample_space);
+    std::cout << "sample_space_int: " << sample_space_int.size() << std::endl;
+    // print_2d_vector(sample_space_int);
 
     double threshold = 0.9;
-    int precision = 103;
-    double bin_width = 0.001;
+    int precision = 101;
+    double bin_width = 0.01;
 
     vector<vector<double> > simplex = discrete_simplex(m, precision, true);
     cout << "simplex: " << simplex.size() << endl;
@@ -80,6 +93,7 @@ int main() {
 
     vector<vector<double> > constraint_set = unique_vectors(filtered_simplex);
     cout << "constraint_set: " << constraint_set.size() << endl;
+    print_2d_vector(constraint_set);
 
     vector<double> fixed_p2s = bin_second_largest_values(constraint_set, bin_width);
     cout << "fixed_p2s: " << fixed_p2s.size() << endl;
