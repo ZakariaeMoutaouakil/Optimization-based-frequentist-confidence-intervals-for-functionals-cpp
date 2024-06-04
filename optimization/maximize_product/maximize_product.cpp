@@ -33,12 +33,14 @@ std::pair<double, std::vector<double> > maximize_product(const std::vector<int> 
     lb[0] = threshold; // p_1 must be at least the threshold
     opt.set_lower_bounds(lb);
 
-    opt.add_equality_constraint([](const std::vector<double> &p, std::vector<double> &grad, void *data) {
-        if (!grad.empty()) {
-            grad[1] = 1;
-        }
-        return p[1] - *static_cast<double *>(data);
-    }, &fixed_p2, 1e-8);
+    if (fixed_p2 > 0) {
+        opt.add_equality_constraint([](const std::vector<double> &p, std::vector<double> &grad, void *data) {
+            if (!grad.empty()) {
+                grad[1] = 1;
+            }
+            return p[1] - *static_cast<double *>(data);
+        }, &fixed_p2, 1e-8);
+    }
 
     opt.add_inequality_constraint(sum_constraint, nullptr, 1e-8);
     opt.add_inequality_constraint(non_increasing_constraint, nullptr, 1e-8);
@@ -64,9 +66,15 @@ std::pair<double, std::vector<double> > maximize_product(const std::vector<int> 
     // Improved initial guess
     std::vector p(n, 1.0 / static_cast<double>(n));
     p[0] = threshold + 1e-3;
-    p[1] = fixed_p2;
-    for (int i = 2; i < n; ++i) {
-        p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
+    if (fixed_p2 > 0) {
+        p[1] = fixed_p2;
+        for (int i = 2; i < n; ++i) {
+            p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
+        }
+    } else {
+        for (int i = 1; i < n; ++i) {
+            p[i] = (1.0 - threshold) / (static_cast<double>(n) - 1);
+        }
     }
 
     double minf;

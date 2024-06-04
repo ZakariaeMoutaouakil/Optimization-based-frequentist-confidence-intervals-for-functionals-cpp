@@ -3,9 +3,9 @@
 #include <set>
 #include <chrono>
 
-std::vector<std::vector<double> > unique_vectors(const std::vector<std::vector<double> > &vectors) {
-    std::set<std::set<double> > seen;
-    std::vector<std::vector<double> > unique_list;
+std::vector<std::vector<int> > unique_vectors(const std::vector<std::vector<int> > &vectors) {
+    std::set<std::set<int> > seen;
+    std::vector<std::vector<int> > unique_list;
 
     for (const auto &vector: vectors) {
         if (std::set vector_set(vector.begin(), vector.end()); seen.find(vector_set) == seen.end()) {
@@ -18,14 +18,14 @@ std::vector<std::vector<double> > unique_vectors(const std::vector<std::vector<d
 }
 
 int main() {
-    const std::vector<std::vector<double> > raw_vectors = {
-        {1.0, 2.0, 3.0},
-        {3.0, 2.0, 1.0},
-        {4.0, 5.0, 6.0},
-        {1.0, 2.0, 3.0}
+    const std::vector<std::vector<int> > raw_vectors = {
+        {1, 2, 3},
+        {3, 2, 1},
+        {4, 5, 6},
+        {1, 2, 3}
     };
 
-    const std::vector<std::vector<double> > unique_vectors_list = unique_vectors(raw_vectors);
+    const std::vector<std::vector<int> > unique_vectors_list = unique_vectors(raw_vectors);
 
     const auto start_time = std::chrono::high_resolution_clock::now();
 

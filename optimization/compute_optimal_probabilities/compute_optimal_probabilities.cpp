@@ -5,7 +5,6 @@
 #include <cmath>
 #include <chrono>
 
-
 std::pair<double, std::vector<double> > compute_optimal_probabilities(const std::vector<int> &x) {
     const std::vector<double>::size_type n = x.size();
     nlopt::opt opt(nlopt::LN_COBYLA, n); // Using the COBYLA algorithm for optimization
