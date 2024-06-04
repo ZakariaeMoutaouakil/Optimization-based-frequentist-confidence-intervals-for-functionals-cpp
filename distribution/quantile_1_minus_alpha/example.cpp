@@ -3,11 +3,11 @@
 #include <vector>
 
 int main() {
-    std::vector<double> vals = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
-    std::vector<double> probas = {0.1f, 0.2f, 0.3f, 0.2f, 0.2f};
-    double risk = 0.5;
+    const std::vector vals = {1.0, 2.0, 3.0, 4.0, 5.0};
+    const std::vector probas = {0.1, 0.2, 0.3, 0.2, 0.2};
+    constexpr double risk = 0.5;
 
-    double quantile = quantile_1_minus_alpha(vals, probas, risk);
+    const double quantile = quantile_1_minus_alpha(vals, probas, risk);
     std::cout << "The quantile of order " << (1 - risk) * 100 << "% is: " << quantile << std::endl;
 
     return 0;

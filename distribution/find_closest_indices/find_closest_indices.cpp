@@ -18,12 +18,11 @@ double second_largest_value(const std::vector<double> &numbers) {
     return second;
 }
 
-int closest_index(double target, const std::vector<double> &floats) {
+int closest_index(const double target, const std::vector<double> &floats) {
     int closest_idx = 0;
     double min_diff = std::abs(floats[0] - target);
     for (size_t i = 1; i < floats.size(); ++i) {
-        double diff = std::abs(floats[i] - target);
-        if (diff < min_diff) {
+        if (double diff = std::abs(floats[i] - target); diff < min_diff) {
             closest_idx = static_cast<int>(i);
             min_diff = diff;
         }
@@ -35,7 +34,7 @@ std::vector<int> find_closest_indices(const std::vector<std::vector<double> > &v
                                       const std::vector<double> &values) {
     std::vector<int> result;
     for (const auto &vector: vectors) {
-        double sec_largest = second_largest_value(vector);
+        const double sec_largest = second_largest_value(vector);
         int index = closest_index(sec_largest, values);
         result.push_back(index);
     }

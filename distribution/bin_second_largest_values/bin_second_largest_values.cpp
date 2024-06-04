@@ -3,18 +3,18 @@
 #include <algorithm>
 #include <set>
 
-std::vector<double> bin_second_largest_values(const std::vector<std::vector<double>>& prob_vectors, double bin_width) {
+std::vector<double> bin_second_largest_values(const std::vector<std::vector<double> > &prob_vectors,
+                                              const double bin_width) {
     std::vector<double> second_largest_values;
-    for (const auto& vector : prob_vectors) {
+    for (const auto &vector: prob_vectors) {
         std::vector<double> sorted_vector = vector;
         std::sort(sorted_vector.begin(), sorted_vector.end());
         second_largest_values.push_back(sorted_vector[sorted_vector.size() - 2]);
     }
 
     std::set<double> binned_values_set;
-    for (const auto& value : second_largest_values) {
-        double binned_value = (static_cast<int>(value / bin_width)) * bin_width;
-        if (binned_value != 0) {
+    for (const auto &value: second_largest_values) {
+        if (const double binned_value = static_cast<int>(value / bin_width) * bin_width; binned_value != 0) {
             binned_values_set.insert(binned_value);
         }
     }

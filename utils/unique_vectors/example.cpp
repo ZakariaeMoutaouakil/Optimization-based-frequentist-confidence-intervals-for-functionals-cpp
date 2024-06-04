@@ -3,7 +3,7 @@
 #include <vector>
 
 int main() {
-    std::vector<std::vector<double>> vecs = {
+    const std::vector<std::vector<double>> vecs = {
         {0.1, 0.2, 0.3},
         {0.3, 0.2, 0.1},
         {0.5, 0.4, 0.6},
@@ -11,7 +11,7 @@ int main() {
         {0.2, 0.1, 0.3}
     };
 
-    std::vector<std::vector<double>> unique_vectors_list = unique_vectors(vecs);
+    const std::vector<std::vector<double>> unique_vectors_list = unique_vectors(vecs);
 
     std::cout << "Unique vectors:" << std::endl;
     for (const auto& vec : unique_vectors_list) {

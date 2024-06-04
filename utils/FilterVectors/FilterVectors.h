@@ -3,6 +3,7 @@
 
 #include <vector>
 
-std::vector<std::vector<double>> filter_vectors_by_max_value(const std::vector<std::vector<double>>& vectors, double threshold);
+std::vector<std::vector<double> > filter_vectors_by_max_value(const std::vector<std::vector<double> > &vectors,
+                                                              double threshold);
 
 #endif // FILTERVECTORS_H
