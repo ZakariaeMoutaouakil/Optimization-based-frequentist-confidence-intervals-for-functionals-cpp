@@ -1,5 +1,4 @@
 #include "discrete_simplex.h"
-#include <algorithm>
 #include <functional>
 
 // Helper function to generate combinations with replacement that sum to n
@@ -17,31 +16,23 @@ void combinations_with_replacement(int n, int k, std::vector<std::vector<int> > 
     }
 
     for (int i = 0; i <= n; ++i) {
-        std::vector<std::vector<int>> subcombs;
+        std::vector<std::vector<int> > subcombs;
         combinations_with_replacement(n - i, k - 1, subcombs);
-        for (auto& subcomb : subcombs) {
+        for (auto &subcomb: subcombs) {
             subcomb.insert(subcomb.begin(), i);
             combs.push_back(subcomb);
         }
     }
 }
 
-std::vector<std::vector<double> > discrete_simplex(int k, int n, bool normalize) {
-    std::vector<std::vector<double>> simplex;
-    std::vector<std::vector<int>> combs;
+std::vector<std::vector<double> > discrete_simplex(const int k, const int n) {
+    std::vector<std::vector<double> > simplex;
+    std::vector<std::vector<int> > combs;
 
     combinations_with_replacement(n, k, combs);
 
-    for (const auto& comb : combs) {
-        if (normalize) {
-            std::vector<double> normalized_point(k);
-            std::transform(comb.begin(), comb.end(), normalized_point.begin(), [n](int x) {
-                return static_cast<double>(x) / n;
-            });
-            simplex.push_back(normalized_point);
-        } else {
-            simplex.emplace_back(comb.begin(), comb.end());
-        }
+    for (const auto &comb: combs) {
+        simplex.emplace_back(comb.begin(), comb.end());
     }
 
     return simplex;

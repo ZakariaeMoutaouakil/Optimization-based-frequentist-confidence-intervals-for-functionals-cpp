@@ -1,5 +1,5 @@
 #include <iostream>
-#include "normalize_vectors.cpp" // Include source file directly
+#include "normalize_vectors.h" // Include source file directly
 #include <vector>
 #include <chrono>
 

@@ -1,6 +1,7 @@
 #include "unique_vector_indices.h"
 #include <unordered_map>
 #include <functional>
+#include <set>
 
 // Custom hash function for std::set<double>
 struct SetHash {
