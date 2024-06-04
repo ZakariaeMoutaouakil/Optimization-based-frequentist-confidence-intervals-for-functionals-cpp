@@ -5,24 +5,24 @@
 using namespace std;
 
 int main() {
-    int k = 3;
-    int n = 5;
+    constexpr int k = 3;
+    constexpr int n = 5;
 
-    auto start_time = chrono::high_resolution_clock::now();
+    const auto start_time = chrono::high_resolution_clock::now();
 
-    vector<vector<int>> vectors = sample_space(k, n);
+    vector<vector<int> > vectors = sample_space(k, n);
 
-    auto end_time = chrono::high_resolution_clock::now();
+    const auto end_time = chrono::high_resolution_clock::now();
 
     cout << "Vectors:" << endl;
-    for (const auto& vec : vectors) {
-        for (int num : vec) {
+    for (const auto &vec: vectors) {
+        for (const int num: vec) {
             cout << num << " ";
         }
         cout << endl;
     }
 
-    chrono::duration<double, std::nano> diff = end_time - start_time;
+    const chrono::duration<double, std::nano> diff = end_time - start_time;
 
     cout << "Time taken: " << diff.count() / 1e9 << " seconds" << endl;
 
