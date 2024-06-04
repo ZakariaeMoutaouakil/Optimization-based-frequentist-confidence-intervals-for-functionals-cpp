@@ -3,6 +3,7 @@
 #include <nlopt.hpp>
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 // Constraint for the sum of probabilities to be less than or equal to 1
 double sum_constraint(const std::vector<double>& p, std::vector<double>& grad, void* data) {
@@ -13,14 +14,11 @@ double sum_constraint(const std::vector<double>& p, std::vector<double>& grad, v
     return sum - 1.0;
 }
 
-// Constraint for ensuring p[i] >= p[i+1] for all i
-double non_increasing_constraint(const std::vector<double>& p, std::vector<double>& grad, void* data) {
-    for (size_t i = 0; i < p.size() - 1; ++i) {
-        if (p[i] < p[i + 1]) {
-            return p[i + 1] - p[i];
-        }
-    }
-    return 0.0;
+// Constraint to ensure the maximum probability is greater than or equal to the threshold
+double max_constraint(const std::vector<double>& p, std::vector<double>& grad, void* data) {
+    double threshold = *(double*)data;
+    double max_p = *std::max_element(p.begin(), p.end());
+    return max_p - threshold;
 }
 
 std::pair<double, std::vector<double>> maximize_product(const std::vector<double>& x, double threshold, double fixed_p2) {
@@ -28,7 +26,6 @@ std::pair<double, std::vector<double>> maximize_product(const std::vector<double
     nlopt::opt opt(nlopt::LN_COBYLA, n); // Using the COBYLA algorithm for optimization
 
     std::vector<double> lb(n, 0); // lower bounds for p
-    lb[0] = threshold; // p_1 must be at least the threshold
     opt.set_lower_bounds(lb);
 
     if (fixed_p2 > 0) {
@@ -41,7 +38,7 @@ std::pair<double, std::vector<double>> maximize_product(const std::vector<double
     }
 
     opt.add_inequality_constraint(sum_constraint, nullptr, 1e-8);
-    opt.add_inequality_constraint(non_increasing_constraint, nullptr, 1e-8);
+    opt.add_inequality_constraint(max_constraint, &threshold, 1e-8);
 
     opt.set_min_objective([](const std::vector<double>& p, std::vector<double>& grad, void* f_data) {
         const std::vector<double>& x = *(std::vector<double>*)f_data;
@@ -85,3 +82,4 @@ std::pair<double, std::vector<double>> maximize_product(const std::vector<double
 
     return {-minf, p}; // Return negative because we were minimizing the negative log-product
 }
+

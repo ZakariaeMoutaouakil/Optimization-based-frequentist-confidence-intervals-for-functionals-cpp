@@ -1,0 +1,8 @@
+add_library(normalized_sample_space normalized_sample_space.cpp)
+
+# Link maximize_product_list with maximize_product
+target_link_libraries(normalized_sample_space PRIVATE sample_space)
+
+# Optionally add an executable for testing purposes
+add_executable(normalized_sample_space_example example.cpp)
+target_link_libraries(normalized_sample_space_example normalized_sample_space)

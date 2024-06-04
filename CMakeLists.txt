@@ -21,6 +21,8 @@ add_subdirectory(utils/Multinomial)
 add_subdirectory(utils/unique_vectors)
 add_subdirectory(utils/unique_vector_indices)
 add_subdirectory(utils/enlarge_matrix)
+add_subdirectory(utils/sample_space)
+add_subdirectory(utils/normalized_sample_space)
 add_subdirectory(optimization/maximize_product)
 add_subdirectory(optimization/maximize_product_list)
 add_subdirectory(optimization/maximize_product_grid)
@@ -34,7 +36,7 @@ add_subdirectory(distribution/final_filter)
 add_executable(main main.cpp)
 
 # Link the subpackages to the main executable
-target_link_libraries(main discrete_simplex maximize_product FactorialList FilterVectors MultinomialCoefficient Multinomial unique_vectors find_closest_indices quantile_1_minus_alpha bin_second_largest_values maximize_product_list maximize_product_grid log_likelihood_grid final_filter unique_vector_indices enlarge_matrix)
+target_link_libraries(main discrete_simplex maximize_product FactorialList FilterVectors MultinomialCoefficient Multinomial unique_vectors find_closest_indices quantile_1_minus_alpha bin_second_largest_values maximize_product_list maximize_product_grid log_likelihood_grid final_filter unique_vector_indices enlarge_matrix sample_space normalized_sample_space)
 
 # Link GMP libraries to the main executable
 target_link_libraries(main ${GMP_LIBRARIES})
