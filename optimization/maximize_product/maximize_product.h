@@ -5,6 +5,7 @@
 #include <utility>
 
 // Function declaration for maximize_product
-std::pair<double, std::vector<double>> maximize_product(const std::vector<double>& x, double threshold, double fixed_p2 = -1);
+std::pair<double, std::vector<double> > maximize_product(const std::vector<int> &x, double threshold,
+                                                         double fixed_p2);
 
 #endif // MAXIMIZE_PRODUCT_H

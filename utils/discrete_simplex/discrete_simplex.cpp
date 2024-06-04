@@ -25,8 +25,8 @@ void combinations_with_replacement(int n, int k, std::vector<std::vector<int> > 
     }
 }
 
-std::vector<std::vector<double> > discrete_simplex(const int k, const int n) {
-    std::vector<std::vector<double> > simplex;
+std::vector<std::vector<int> > discrete_simplex(const int k, const int n) {
+    std::vector<std::vector<int> > simplex;
     std::vector<std::vector<int> > combs;
 
     combinations_with_replacement(n, k, combs);

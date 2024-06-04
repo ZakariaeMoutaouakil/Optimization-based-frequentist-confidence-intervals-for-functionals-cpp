@@ -19,7 +19,7 @@ int main() {
     constexpr int n = 10;
 
     const auto start_time = std::chrono::high_resolution_clock::now();
-    std::vector<std::vector<double>> example_simplex = discrete_simplex(k, n);
+    std::vector<std::vector<int>> example_simplex = discrete_simplex(k, n);
     const auto end_time = std::chrono::high_resolution_clock::now();
 
     const std::chrono::duration<double> elapsed = end_time - start_time;

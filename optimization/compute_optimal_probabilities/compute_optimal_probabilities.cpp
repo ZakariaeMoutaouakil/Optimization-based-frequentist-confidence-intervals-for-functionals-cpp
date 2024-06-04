@@ -1,8 +1,8 @@
-#include "maximize_product.h"
+#include "compute_optimal_probabilities.h"
 #include <iostream>
 #include <nlopt.hpp>
 #include <cmath>
-#include <vector>
+#include <chrono>
 
 // Constraint for the sum of probabilities to be less than or equal to 1
 double sum_constraint(const std::vector<double> &p, std::vector<double> &grad, void *data) {
@@ -13,35 +13,16 @@ double sum_constraint(const std::vector<double> &p, std::vector<double> &grad, v
     return sum - 1.0;
 }
 
-// Constraint for ensuring p[i] >= p[i+1] for all i
-double non_increasing_constraint(const std::vector<double> &p, std::vector<double> &grad, void *data) {
-    for (size_t i = 0; i < p.size() - 1; ++i) {
-        if (p[i] < p[i + 1]) {
-            return p[i + 1] - p[i];
-        }
-    }
-    return 0.0;
-}
-
-std::pair<double, std::vector<double> > maximize_product(const std::vector<int> &x,
-                                                         const double threshold,
-                                                         double fixed_p2) {
+std::pair<double, std::vector<double> > compute_optimal_probabilities(const std::vector<int> &x) {
     const std::vector<double>::size_type n = x.size();
     nlopt::opt opt(nlopt::LN_COBYLA, n); // Using the COBYLA algorithm for optimization
 
-    std::vector<double> lb(n, 0); // lower bounds for p
-    lb[0] = threshold; // p_1 must be at least the threshold
+    const std::vector<double> lb(n, 0); // lower bounds for p (all non-negative)
     opt.set_lower_bounds(lb);
 
-    opt.add_equality_constraint([](const std::vector<double> &p, std::vector<double> &grad, void *data) {
-        if (!grad.empty()) {
-            grad[1] = 1;
-        }
-        return p[1] - *static_cast<double *>(data);
-    }, &fixed_p2, 1e-8);
+    // Removed threshold and fixed_p2 related constraints
 
     opt.add_inequality_constraint(sum_constraint, nullptr, 1e-8);
-    opt.add_inequality_constraint(non_increasing_constraint, nullptr, 1e-8);
 
     opt.set_min_objective([](const std::vector<double> &p, std::vector<double> &grad, void *f_data) {
         const std::vector<double> &vector = *static_cast<std::vector<double> *>(f_data);
@@ -61,21 +42,17 @@ std::pair<double, std::vector<double> > maximize_product(const std::vector<int> 
     opt.set_xtol_rel(1e-6);
     opt.set_ftol_rel(1e-6);
 
-    // Improved initial guess
+    // Improved initial guess (assuming all probabilities have equal weight)
     std::vector p(n, 1.0 / static_cast<double>(n));
-    p[0] = threshold + 1e-3;
-    p[1] = fixed_p2;
-    for (int i = 2; i < n; ++i) {
-        p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
-    }
 
     double minf;
     try {
         opt.optimize(p, minf);
-        std::cout << "Found minimum at f = " << minf << std::endl;
     } catch (const std::exception &e) {
         std::cerr << "NLopt failed: " << e.what() << std::endl;
     }
+
+    std::cout << "Found minimum at f = " << minf << std::endl;
 
     return {-minf, p}; // Return negative because we were minimizing the negative log-product
 }
