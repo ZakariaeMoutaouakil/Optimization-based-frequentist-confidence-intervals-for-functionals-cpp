@@ -3,6 +3,6 @@
 
 #include <vector>
 
-std::vector<double> maximize_product_list(const std::vector<std::vector<double>>& x, double threshold);
+std::vector<double> maximize_product_list(const std::vector<std::vector<int> > &x);
 
 #endif // MAXIMIZE_PRODUCT_LIST_H

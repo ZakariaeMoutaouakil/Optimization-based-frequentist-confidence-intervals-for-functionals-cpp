@@ -1,17 +1,10 @@
 #include "compute_optimal_probabilities.h"
+#include "../maximize_product/maximize_product.h"
 #include <iostream>
 #include <nlopt.hpp>
 #include <cmath>
 #include <chrono>
 
-// Constraint for the sum of probabilities to be less than or equal to 1
-double sum_constraint(const std::vector<double> &p, std::vector<double> &grad, void *data) {
-    double sum = 0;
-    for (const double pi: p) {
-        sum += pi;
-    }
-    return sum - 1.0;
-}
 
 std::pair<double, std::vector<double> > compute_optimal_probabilities(const std::vector<int> &x) {
     const std::vector<double>::size_type n = x.size();
@@ -20,8 +13,7 @@ std::pair<double, std::vector<double> > compute_optimal_probabilities(const std:
     const std::vector<double> lb(n, 0); // lower bounds for p (all non-negative)
     opt.set_lower_bounds(lb);
 
-    // Removed threshold and fixed_p2 related constraints
-
+    // Constraint for ensuring p[i] >= p[i+1] for all i
     opt.add_inequality_constraint(sum_constraint, nullptr, 1e-8);
 
     opt.set_min_objective([](const std::vector<double> &p, std::vector<double> &grad, void *f_data) {

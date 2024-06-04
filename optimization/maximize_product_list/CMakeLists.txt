@@ -1,7 +1,7 @@
 add_library(maximize_product_list maximize_product_list.cpp)
 
 # Link maximize_product_list with maximize_product
-target_link_libraries(maximize_product_list PRIVATE maximize_product)
+target_link_libraries(maximize_product_list PRIVATE compute_optimal_probabilities)
 
 # Optionally add an executable for testing purposes
 add_executable(maximize_product_list_example example.cpp)

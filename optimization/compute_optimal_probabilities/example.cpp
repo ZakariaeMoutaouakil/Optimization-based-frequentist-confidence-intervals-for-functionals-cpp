@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <vector>
+#include <numeric>
 
 int main() {
     // Example usage
@@ -17,6 +18,11 @@ int main() {
     for (auto& p : optimal_p) {
         std::cout << p << " ";
     }
+    std::cout << std::endl;
+
+    const auto n = std::accumulate(optimal_p.begin(), optimal_p.end(), 0.);
+    std::cout << "Sum of optimal p values: " << n << std::endl;
+
     std::cout << std::endl;
     std::cout << "Time taken without fixed p_2: " << elapsed.count() / 1e9 << " seconds" << std::endl;
 

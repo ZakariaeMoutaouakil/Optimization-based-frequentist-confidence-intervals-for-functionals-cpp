@@ -1,5 +1,8 @@
 add_library(compute_optimal_probabilities compute_optimal_probabilities.cpp)
 
+# Link maximize_product_grid with maximize_product
+target_link_libraries(compute_optimal_probabilities PRIVATE maximize_product)
+
 # Optionally add an executable for testing purposes
 add_executable(compute_optimal_probabilities_example example.cpp)
 target_link_libraries(compute_optimal_probabilities_example compute_optimal_probabilities)
