@@ -7,11 +7,10 @@
 int main() {
     // Example usage for fixed p_2
     std::vector x = {0, 4, 1};
-    double threshold = 0.9;
     constexpr double fixed_p2 = 0.05;
 
     auto start = std::chrono::high_resolution_clock::now();
-    const auto [optimal_value, optimal_p] = maximize_product(x, threshold, fixed_p2);
+    const auto [optimal_value, optimal_p] = maximize_product(x, fixed_p2);
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
 
@@ -30,10 +29,9 @@ int main() {
 
     // Example usage without fixed p_2
     x = {2, 1, 1, 1, 0, 1};
-    threshold = 0.8;
 
     start = std::chrono::high_resolution_clock::now();
-    const auto [optimal_value2, optimal_p2] = maximize_product(x, threshold);
+    const auto [optimal_value2, optimal_p2] = maximize_product(x);
     end = std::chrono::high_resolution_clock::now();
     elapsed = end - start;
 

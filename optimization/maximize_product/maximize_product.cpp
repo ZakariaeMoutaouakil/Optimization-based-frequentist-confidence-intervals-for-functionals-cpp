@@ -24,14 +24,9 @@ double non_increasing_constraint(const std::vector<double> &p, std::vector<doubl
 }
 
 std::pair<double, std::vector<double> > maximize_product(const std::vector<int> &x,
-                                                         const double threshold,
                                                          double fixed_p2) {
     const std::vector<double>::size_type n = x.size();
     nlopt::opt opt(nlopt::LN_COBYLA, n); // Using the COBYLA algorithm for optimization
-
-    std::vector<double> lb(n, 0); // lower bounds for p
-    lb[0] = threshold; // p_1 must be at least the threshold
-    opt.set_lower_bounds(lb);
 
     if (fixed_p2 > 0) {
         opt.add_equality_constraint([](const std::vector<double> &p, std::vector<double> &grad, void *data) {
@@ -65,17 +60,6 @@ std::pair<double, std::vector<double> > maximize_product(const std::vector<int> 
 
     // Improved initial guess
     std::vector p(n, 1.0 / static_cast<double>(n));
-    p[0] = threshold + 1e-3;
-    if (fixed_p2 > 0) {
-        p[1] = fixed_p2;
-        for (int i = 2; i < n; ++i) {
-            p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
-        }
-    } else {
-        for (int i = 1; i < n; ++i) {
-            p[i] = (1.0 - threshold) / (static_cast<double>(n) - 1);
-        }
-    }
 
     double minf;
     try {
