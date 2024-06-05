@@ -24,10 +24,10 @@ int main() {
     using namespace std;
 
     constexpr int n = 10;
-    constexpr int m = 5;
+    constexpr int m = 6;
     constexpr int precision = 31;
     constexpr double threshold = 0.8;
-    constexpr double bin_width = 0.1;
+    constexpr double bin_width = 0.01;
 
     const auto start_time = high_resolution_clock::now();
 

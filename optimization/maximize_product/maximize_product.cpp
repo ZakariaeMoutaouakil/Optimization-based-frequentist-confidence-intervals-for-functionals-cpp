@@ -64,18 +64,22 @@ std::pair<double, std::vector<double> > maximize_product(const std::vector<int> 
     opt.set_ftol_rel(1e-6);
 
     // Improved initial guess
-    std::vector p(n, 1.0 / static_cast<double>(n));
-    p[0] = threshold + 1e-3;
-    if (fixed_p2 > 0) {
-        p[1] = fixed_p2;
-        for (int i = 2; i < n; ++i) {
-            p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
-        }
-    } else {
-        for (int i = 1; i < n; ++i) {
-            p[i] = (1.0 - threshold) / (static_cast<double>(n) - 1);
-        }
-    }
+    std::vector p(n, threshold);
+    // if (fixed_p2 > 0) {
+    //     p[1] = fixed_p2;
+    // }
+    // std::vector p(n, 1.0 / static_cast<double>(n));
+    // p[0] = threshold + 1e-3;
+    // if (fixed_p2 > 0) {
+    //     p[1] = fixed_p2;
+    //     for (int i = 2; i < n; ++i) {
+    //         p[i] = (1.0 - threshold - fixed_p2) / (static_cast<double>(n) - 2);
+    //     }
+    // } else {
+    //     for (int i = 1; i < n; ++i) {
+    //         p[i] = (1.0 - threshold) / (static_cast<double>(n) - 1);
+    //     }
+    // }
 
     double minf;
     try {

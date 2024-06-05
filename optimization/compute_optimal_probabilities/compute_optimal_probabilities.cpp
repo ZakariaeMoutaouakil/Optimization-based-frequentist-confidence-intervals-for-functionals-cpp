@@ -34,7 +34,8 @@ std::pair<double, std::vector<double> > compute_optimal_probabilities(const std:
     opt.set_ftol_rel(1e-6);
 
     // Improved initial guess (assuming all probabilities have equal weight)
-    std::vector p(n, 1.0 / static_cast<double>(n));
+    // std::vector p(n, 1.0 / static_cast<double>(n));
+    std::vector p(n, 1.0);
 
     double minf;
     try {
@@ -43,7 +44,7 @@ std::pair<double, std::vector<double> > compute_optimal_probabilities(const std:
         std::cerr << "NLopt failed: " << e.what() << std::endl;
     }
 
-    std::cout << "Found minimum at f = " << minf << std::endl;
+    std::cout << "Found infimum at f = " << minf << std::endl;
 
     return {-minf, p}; // Return negative because we were minimizing the negative log-product
 }
