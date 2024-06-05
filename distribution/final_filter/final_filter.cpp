@@ -47,17 +47,18 @@ double final_filter(const std::vector<std::vector<double> > &vectors,
     std::vector<std::vector<double> > final_candidates;
 
     for (size_t i = 0; i < vectors.size(); ++i) {
-        const mpq_class likelihood = -2 * std::accumulate(
-                                         vectors[i].begin(), vectors[i].end(), 0.0,
-                                         [&x](const double sum, const double pi) {
-                                             static size_t index = 0; // Static variable to keep track of index
-                                             const double contribution = pi != 0 ? x[index] * std::log(pi) : 0.0;
-                                             index++;
-                                             return sum + contribution;
-                                         });
+        const auto likelihood = std::accumulate(
+            vectors[i].begin(), vectors[i].end(), 1.0,
+            [&x](const double product, const double pi) {
+                static size_t index = 0; // Static variable to keep track of index
+                const double contribution = (pi != 0) ? std::pow(pi, x[index]) : 0.0;
+                // Return 0 if pi is 0
+                index++;
+                return product * contribution;
+            });
         std::cout << "likelihood: " << likelihood << std::endl;
-
-        if (likelihood <= quantiles[i] + maximum_likelihood) {
+        std::cout << exp((quantiles[i] + maximum_likelihood) / 2) << std::endl;
+        if (exp((quantiles[i] + maximum_likelihood) / 2) <= likelihood) {
             std::cout << "Candidate: " << i << std::endl;
             final_candidates.push_back(vectors[i]);
         }

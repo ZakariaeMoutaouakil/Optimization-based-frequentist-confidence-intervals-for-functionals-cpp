@@ -24,10 +24,10 @@ int main() {
     using namespace std;
 
     constexpr int n = 10;
-    constexpr int m = 3;
-    constexpr int precision = 20;
+    constexpr int m = 5;
+    constexpr int precision = 31;
     constexpr double threshold = 0.8;
-    constexpr double bin_width = 0.01;
+    constexpr double bin_width = 0.1;
 
     const auto start_time = high_resolution_clock::now();
 
@@ -68,14 +68,17 @@ int main() {
         );
     }
 
+    // Final step
     const vector observation = {n - 2, 1, 1};
     const auto final_result = final_filter(
         constraint_set, quantiles, observation, threshold
     );
     cout << "final_result: " << final_result << endl;
+    std::cout << "Actual p2: " << static_cast<double>(observation[1]) / n << std::endl;
 
     const auto end_time = high_resolution_clock::now();
     const duration<double> elapsed = end_time - start_time;
     cout << "Elapsed time: " << elapsed.count() << " seconds" << endl;
+
     return 0;
 }
